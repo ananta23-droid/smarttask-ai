@@ -58,14 +58,14 @@ const Dashboard = () => {
       } else {
         const errorDetail =
           tasksData.reason?.response?.data?.detail ||
-          'Failed to connect to backend server. Make sure FastAPI is running on port 8000.';
+          'Failed to connect to backend server. Please verify the backend is running and CORS/network settings are correct.';
         setErrorMessage(errorDetail);
       }
 
       if (healthData.status === 'fulfilled') {
         setServerHealth(healthData.value);
       } else {
-        setServerHealth({ status: 'offline', database: 'unknown' });
+        setServerHealth({ status: 'offline', database: 'disconnected' });
       }
     } catch (err) {
       setErrorMessage('Unexpected error loading data.');
@@ -185,6 +185,8 @@ const Dashboard = () => {
     }
   };
 
+  const isBackendOnline =
+    serverHealth?.status === 'ok' || serverHealth?.status === 'degraded';
   const isDbConnected = serverHealth?.database === 'connected';
 
   return (
@@ -202,8 +204,8 @@ const Dashboard = () => {
           <span className={`status-dot ${isDbConnected ? 'active' : ''}`}></span>
           <span>
             FastAPI:{' '}
-            <strong style={{ color: serverHealth ? '#38bdf8' : '#f87171' }}>
-              {serverHealth ? 'ONLINE' : 'OFFLINE'}
+            <strong style={{ color: isBackendOnline ? '#38bdf8' : '#f87171' }}>
+              {isBackendOnline ? 'ONLINE' : 'OFFLINE'}
             </strong>{' '}
             | MongoDB:{' '}
             <strong style={{ color: isDbConnected ? '#34d399' : '#f87171' }}>

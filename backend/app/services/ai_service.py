@@ -98,10 +98,11 @@ def summarize_tasks_with_ai(tasks: List[AISummarizeRequestItem]) -> AISummarizeR
             "response_format": {"type": "json_object"},
         }
 
+        frontend_url = os.getenv("FRONTEND_URL", "https://smarttask-ai-plum.vercel.app").strip()
         headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "http://localhost:5173",
+            "HTTP-Referer": frontend_url or "https://smarttask-ai-plum.vercel.app",
             "X-Title": "SmartTask AI",
         }
 

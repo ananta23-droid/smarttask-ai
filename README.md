@@ -247,3 +247,38 @@ print('Backend Health:', res.json())
 4. **Edit Details:** Click **Edit**, update details, and save.
 5. **AI Prioritization:** Click **"Summarize My Tasks"**; view the structured AI executive summary and recommended order.
 6. **Delete Task:** Click **Delete**, accept the confirmation prompt, and verify removal from the database.
+
+---
+
+## 🌐 Production Deployment Guide
+
+SmartTask AI is architected to seamlessly transition between local development and cloud deployments (Render + Vercel) with zero code modifications.
+
+### Backend Deployment (Render)
+
+1. **Service Type:** Web Service
+2. **Build Command:** `pip install -r requirements.txt`
+3. **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. **Environment Variables on Render:**
+   - `MONGODB_URL`: Your production MongoDB Atlas connection URI (`mongodb+srv://...`).
+   - `OPENROUTER_API_KEY`: Your OpenRouter secret API key.
+   - `OPENROUTER_MODEL`: `google/gemini-2.5-flash` (or preferred model).
+   - `CORS_ORIGINS`: Comma-separated allowed frontend URLs, e.g. `https://smarttask-ai-plum.vercel.app`.
+   - `FRONTEND_URL`: `https://smarttask-ai-plum.vercel.app` (used for OpenRouter referer attribution).
+
+### Frontend Deployment (Vercel)
+
+1. **Framework Preset:** Vite
+2. **Root Directory:** `frontend`
+3. **Build Command:** `npm run build`
+4. **Output Directory:** `dist`
+5. **Environment Variables on Vercel:**
+   - `VITE_API_URL`: Your Render backend service URL (`https://smarttask-ai-backend-ut62.onrender.com`).
+   *Note: If `VITE_API_URL` is omitted, the production build automatically falls back to `.env.production`.*
+
+### Dual-Environment Behavior Summary
+
+| Environment | Frontend API Base URL | Backend Allowed Origins |
+|---|---|---|
+| **Local Development** (`npm run dev`) | `http://localhost:8000` (via `.env.development`) | `localhost:5173`, `127.0.0.1:5173`, `localhost:3000` |
+| **Production Cloud** (Vercel + Render) | `https://smarttask-ai-backend-ut62.onrender.com` (via `.env.production` or Vercel env) | `smarttask-ai-plum.vercel.app`, any `*.vercel.app` preview branch |
