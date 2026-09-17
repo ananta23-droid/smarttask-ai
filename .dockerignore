@@ -1,0 +1,46 @@
+# Environment and secret files =
+.env
+.env.*
+*.env
+backend/.env
+backend/.env.*
+
+# Python virtual environments
+.venv
+venv/
+backend/.venv
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Git and repository configuration
+.git
+.gitignore
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Frontend dependencies and builds
+frontend/node_modules/
+frontend/dist/
+node_modules/
+dist/
+
+# Test files and scratch notes
+test_*.py
+tests/
+scratch/
+
+# OS metadata
+.DS_Store
+Thumbs.db

@@ -1,0 +1,43 @@
+# Environment and secret files (CRITICAL: never copy into image)
+.env
+.env.*
+*.env
+
+# Python virtual environments
+.venv
+venv/
+ENV/
+env/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Git and repository configuration
+.git
+.gitignore
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node and frontend assets
+node_modules/
+dist/
+
+# Test files and scratch notes
+test_*.py
+tests/
+scratch/
+
+# OS metadata
+.DS_Store
+Thumbs.db
