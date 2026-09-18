@@ -61,12 +61,15 @@ const Dashboard = () => {
           'Failed to connect to backend server. Please verify the backend is running and CORS/network settings are correct.';
         setErrorMessage(errorDetail);
       }
+      if (healthData.status === 'fulfilled') 
+        {
+          setServerHealth(healthData.value);
+        } 
+      else{
+           setServerHealth({ status: 'offline', database: 'disconnected' });
+          }
 
-      if (healthData.status === 'fulfilled') {
-        setServerHealth(healthData.value);
-      } else {
-        setServerHealth({ status: 'offline', database: 'disconnected' });
-      }
+     
     } catch (err) {
       setErrorMessage('Unexpected error loading data.');
     } finally {
